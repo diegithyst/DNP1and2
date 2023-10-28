@@ -29,13 +29,9 @@ public class PageFileDao : IPageDao
         return Task.FromResult(page);
     }
 
-    public Task<IEnumerable<Page>> GetAsync(PageSearchDto dto)
+    public Task<IEnumerable<Page>> GetAsync()
     {
         IEnumerable<Page> pages = context.Pages.AsEnumerable();
-        if (dto.Id != null)
-        {
-            pages = context.Pages.Where(p => p.Id == dto.Id);
-        }
         return Task.FromResult(pages);
     }
 

@@ -32,12 +32,11 @@ public class PageController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Page>>> GetAsync([FromQuery] int? id)
+    public async Task<ActionResult<IEnumerable<Page>>> GetAsync()
     {
         try
         {
-            PageSearchDto parameters = new(id);
-            IEnumerable<Page> pages = await pageLogic.GetAsync(parameters);
+            IEnumerable<Page> pages = await pageLogic.GetAsync();
             return Ok(pages);
         }
         catch (Exception e)

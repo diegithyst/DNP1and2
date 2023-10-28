@@ -68,6 +68,39 @@
       },
       "Title": "Hi",
       "Body": "yes"
+    },
+    {
+      "Id": 6,
+      "Creator": {
+        "Id": 1,
+        "Username": "ame",
+        "Password": "itsme",
+        "Email": "itsme@ame.me"
+      },
+      "Title": "Another one??",
+      "Body": "u crazy"
+    },
+    {
+      "Id": 7,
+      "Creator": {
+        "Id": 1,
+        "Username": "ame",
+        "Password": "itsme",
+        "Email": "itsme@ame.me"
+      },
+      "Title": "test",
+      "Body": "testing"
+    },
+    {
+      "Id": 8,
+      "Creator": {
+        "Id": 1,
+        "Username": "ame",
+        "Password": "itsme",
+        "Email": "itsme@ame.me"
+      },
+      "Title": "another test",
+      "Body": "yaaas"
     }
   ]
 }

@@ -30,9 +30,9 @@ public class PageLogic : IPageLogic
         return created;
     }
 
-    public Task<IEnumerable<Page>> GetAsync(PageSearchDto dto)
+    public Task<IEnumerable<Page>> GetAsync()
     {
-        return pageDao.GetAsync(dto);
+        return pageDao.GetAsync();
     }
 
     public async Task<BasicIdPage> GetByIdAsync(int id)
