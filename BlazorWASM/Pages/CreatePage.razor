@@ -38,7 +38,7 @@
         try
         {
             await pageService.CreateAsync(new PageCreationDto((int)creatorId, title, body));
-            navMgr.NavigateTo("/ViewPages");
+            navMgr.NavigateTo("/");
         }
         catch (Exception e)
         {
