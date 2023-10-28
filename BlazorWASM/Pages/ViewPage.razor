@@ -1,0 +1,51 @@
+@page "/ViewPage/{id:int}"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using Domain.Dtos
+@inject IPageService pageService
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div><span>@msg</span></div>
+}
+else
+{
+    <div>
+        <h3>@title</h3>
+    </div>
+    <br/>
+    <div>
+        <span>@body</span>
+    </div>
+    <br/>
+    <div>
+        <span>Created by: @createdBy</span>
+    </div>
+}
+@code {
+    [Parameter]
+    public int id { get; set; }
+    
+    private string msg = "";
+    private string title = "";
+    private string createdBy = "";
+    private string body = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            BasicIdPage page = await pageService.GetByIdAsync(id);
+            title = page.Title;
+            body = page.Body;
+            createdBy = page.Creator.Username;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

@@ -38,5 +38,11 @@ public class PageFileDao : IPageDao
         }
         return Task.FromResult(pages);
     }
+
+    public Task<Page> GetByIdAsync(int id)
+    {
+        Page existing = context.Pages.FirstOrDefault(p => p.Id == id);
+        return Task.FromResult(existing);
+    }
 }
     

@@ -1,0 +1,57 @@
+@page "/ViewPages"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject NavigationManager navMgr
+@inject IPageService pageService
+
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div>
+        <span>@msg</span>
+    </div>
+}
+
+@if (pages == null)
+{
+    <span>Loading...</span>
+}
+else if (!pages.Any())
+{
+    <span>No pages found!</span>
+}
+else
+{
+    <div class="pages-container">
+        <ol>
+            @foreach (var item in pages)
+            {
+                <li @onclick="@(() => navMgr.NavigateTo($"/ViewPage/{item.Id}"))">@item.Title</li>
+            }
+        </ol>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <label style="color: red">@msg</label>
+}
+
+@code {
+    private IEnumerable<Page> pages;
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            pages = await pageService.GetAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

@@ -35,6 +35,18 @@ public class PageLogic : IPageLogic
         return pageDao.GetAsync(dto);
     }
 
+    public async Task<BasicIdPage> GetByIdAsync(int id)
+    {
+        Page? page = await pageDao.GetByIdAsync(id);
+        if (page == null)
+        {
+            throw new Exception($"Page with {id} does not exist");
+        }
+
+        return new BasicIdPage(page.Id, page.Creator, page.Title, page.Body);
+    }
+
+
     private static void ValidateData(PageCreationDto dto)
     {
         if (string.IsNullOrEmpty(dto.Title)) throw new Exception("Title cannot be empty");

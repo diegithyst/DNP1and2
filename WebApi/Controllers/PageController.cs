@@ -46,4 +46,19 @@ public class PageController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<BasicIdPage>> GetIdAsync([FromRoute] int id)
+    {
+        try
+        {
+            BasicIdPage page = await pageLogic.GetByIdAsync(id);
+            return Ok(page);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e);
+        }
+    }
 }
