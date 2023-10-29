@@ -34,7 +34,7 @@ public class AuthService : IAuthService
         return existingUser;
     }
 
-    public Task RegisterUser(User user)
+    public Task RegisterUser(UserCreationDto user)
     {
         if (string.IsNullOrEmpty(user.Username))
         {
@@ -50,10 +50,8 @@ public class AuthService : IAuthService
         {
             throw new Exception("Email cannot be empty");
         }
-
-        UserCreationDto dto = new UserCreationDto(user.Username, user.Password, user.Email);
         
-        userLogic.CreateAsync(dto);
+        userLogic.CreateAsync(user);
         return Task.CompletedTask;
     }
 }

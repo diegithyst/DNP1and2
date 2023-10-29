@@ -1,30 +1,40 @@
 @page "/CreatePage"
 @using Domain.Dtos
 @using HttpClients.ClientInterfaces
+@using System.Security.Claims
 @inject IPageService pageService
 @inject NavigationManager navMgr
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 
-<div class="card">
-    <div class="form-group field">
-        <label>Title:</label>
-        <input type="text" @bind="title"/>
+<AuthorizeView>
+    <span>hello @creatorId</span>
+    <div class="card">
+        <div class="form-group field">
+            <label>Title:</label>
+            <input type="text" @bind="title"/>
+        </div>
+        <div class="form-group field">
+            <label>Body:</label>
+            <input type="text" @bind="body"/>
+        </div>
+        <div class="button-row">
+            @if (!string.IsNullOrEmpty(resultMsg))
+            {
+                <label style="color: red">@resultMsg</label>
+            }
+            <button @onclick="Create" class="createbtn"> Create </button>
+        </div>
     </div>
-    <div class="form-group field">
-        <label>Body:</label>
-        <input type="text" @bind="body"/>
-    </div>
-    <div class="button-row">
-        @if (!string.IsNullOrEmpty(resultMsg))
-        {
-            <label style="color: red">@resultMsg</label>
-        }
-        <button @onclick="Create" class="createbtn"> Create </button>
-    </div>
-</div>
+</AuthorizeView>
 
 @code {
-    private int creatorId = 1;  //CHANGE THIS WHEN ADD AUTHORIZATION
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    private bool isLoggedIn;
+
+    private string creatorId; //CHANGE THIS WHEN ADD AUTHORIZATION
     private string title = "";
     private string body = "";
     private string resultMsg = "";
@@ -32,12 +42,15 @@
 
     private async Task Create()
     {
-        //something about this to get the authorized users id
-        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+    //something about this to get the authorized users id
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+        
         resultMsg = "";
         try
         {
-            await pageService.CreateAsync(new PageCreationDto((int)creatorId, title, body));
+            await pageService.CreateAsync(new PageCreationDto(int.Parse(creatorId), title, body));
             navMgr.NavigateTo("/");
         }
         catch (Exception e)
@@ -46,4 +59,12 @@
             resultMsg = e.Message;
         }
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        creatorId = user.Claims.First(claim => claim.Type.Equals("Id")).Value;
+    }
+    
 }

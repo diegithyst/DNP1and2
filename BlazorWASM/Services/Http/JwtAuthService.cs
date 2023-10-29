@@ -8,9 +8,9 @@ namespace BlazorWASM.Services.Http;
 
 public class JwtAuthService : IAuthService
 {
-    private readonly HttpClient client;
+    private readonly HttpClient client = new ();
     public static string? Jwt { get; private set; } = "";
-    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null;
+    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
     
     public async Task LoginAsync(string username, string password)
     {
@@ -22,6 +22,7 @@ public class JwtAuthService : IAuthService
         
         string userAsJson = JsonSerializer.Serialize(userLoginDto);
         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
+        Console.WriteLine(content);
         //PROBLEM HERE
         HttpResponseMessage response = await client.PostAsync("https://localhost:7017/Auth/login", content);
         
@@ -43,12 +44,22 @@ public class JwtAuthService : IAuthService
 
     public Task LogoutAsync()
     {
-        throw new NotImplementedException();
+        Jwt = null;
+        ClaimsPrincipal principal = new();
+        OnAuthStateChanged.Invoke(principal);
+        return Task.CompletedTask;
     }
 
-    public Task RegisterAsync(User user)
+    public async Task RegisterAsync(UserCreationDto user)
     {
-        throw new NotImplementedException();
+        string userAsJson = JsonSerializer.Serialize(user);
+        StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7017/Auth/register", content);
+        string responseContent = await responseMessage.Content.ReadAsStringAsync();
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new Exception();
+        }
     }
 
     public Task<ClaimsPrincipal> GetAuthAsync()

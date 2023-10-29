@@ -76,7 +76,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost, Route("register")]
-    public async Task<ActionResult> Register([FromBody] User user)
+    public async Task<ActionResult> Register([FromBody] UserCreationDto user)
     {
         try
         {

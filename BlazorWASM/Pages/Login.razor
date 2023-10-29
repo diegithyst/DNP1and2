@@ -6,7 +6,6 @@
 <AuthorizeView>
     <NotAuthorized>
         <div class="card">
-            <h3>Please login</h3>
             <div class="field">
                 <label>User name:</label>
                 <input type="text" @bind="userName"/>
@@ -26,7 +25,12 @@
             <div class="field">
                 <button class="loginbtn" @onclick="LoginAsync">Log in</button>
             </div>
-        </div>
+                <div>
+                    <span>Not a member yet?</span>
+                    <br/>
+                    <span  @onclick="@(() => navMgr.NavigateTo($"/Register"))">Register now!</span>
+                </div>
+            </div>
     </NotAuthorized>
     <Authorized>
         <div class="card">
@@ -54,5 +58,4 @@
             errorLabel = $"Error: {e.Message}";
         }
     }
-}
 }
