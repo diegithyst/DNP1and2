@@ -4,24 +4,31 @@
 @using Domain.Dtos
 @inject IPageService pageService
 
-@if (!string.IsNullOrEmpty(msg))
-{
-    <div><span>@msg</span></div>
-}
-else
-{
-    <div>
-        <h3>@title</h3>
-    </div>
-    <br/>
-    <div>
-        <span>@body</span>
-    </div>
-    <br/>
-    <div>
-        <span>Created by: @createdBy</span>
-    </div>
-}
+<AuthorizeView>
+    <Authorized>
+        @if (!string.IsNullOrEmpty(msg))
+        {
+            <div><span>@msg</span></div>
+        }
+        else
+        {
+            <div>
+                <h3>@title</h3>
+            </div>
+            <br/>
+            <div>
+                <span>@body</span>
+            </div>
+            <br/>
+            <div>
+                <span>Created by: @createdBy</span>
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in to continue.</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     [Parameter]
     public int id { get; set; }

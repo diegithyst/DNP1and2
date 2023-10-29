@@ -7,31 +7,36 @@
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 
 <AuthorizeView>
-    <span>hello @creatorId</span>
-    <div class="card">
-        <div class="form-group field">
-            <label>Title:</label>
-            <input type="text" @bind="title"/>
+    <Authorized>
+        <div class="card">
+            <div class="form-group field">
+                <label>Title:</label>
+                <input type="text" @bind="title"/>
+            </div>
+            <div class="form-group field">
+                <label>Body:</label>
+                <input type="text" @bind="body"/>
+            </div>
+            <div class="button-row">
+                @if (!string.IsNullOrEmpty(resultMsg))
+                {
+                    <label style="color: red">@resultMsg</label>
+                }
+                <button @onclick="Create" class="createbtn"> Create </button>
+            </div>
         </div>
-        <div class="form-group field">
-            <label>Body:</label>
-            <input type="text" @bind="body"/>
-        </div>
-        <div class="button-row">
-            @if (!string.IsNullOrEmpty(resultMsg))
-            {
-                <label style="color: red">@resultMsg</label>
-            }
-            <button @onclick="Create" class="createbtn"> Create </button>
-        </div>
-    </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to add a new page!</p>
+    </NotAuthorized>
 </AuthorizeView>
+
 
 @code {
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-    
+    private IEnumerable<Claim>? userClaims;
     private bool isLoggedIn;
 
     private string creatorId; //CHANGE THIS WHEN ADD AUTHORIZATION
@@ -64,6 +69,10 @@
     {
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+        if (!isLoggedIn) return;
+        userClaims = user.Claims;
+        
         creatorId = user.Claims.First(claim => claim.Type.Equals("Id")).Value;
     }
     

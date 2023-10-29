@@ -1,0 +1,67 @@
+@page "/MyPages"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@using System.Security.Claims
+@inject NavigationManager navMgr
+@inject IPageService pageService
+
+<AuthorizeView>
+    <Authorized>
+        <h3>My Pages</h3>
+        @if (!string.IsNullOrEmpty(msg))
+        {
+            <div>
+                <span>@msg</span>
+            </div>
+        }
+
+        @if (allPages == null)
+        {
+            <span>Loading...</span>
+        }
+        else if (!allPages.Any())
+        {
+            <span>No pages found!</span>
+        }
+        else
+        {
+            <div class="pages-container">
+                <ol>
+                    @foreach (var item in allPages)
+                    {
+                        if (@item.Creator.Id == Int32.Parse(@context.User.Claims.First(claim => claim.Type.Equals("Id")).Value))
+                        {
+                            <li @onclick="@(() => navMgr.NavigateTo($"/ViewPage/{item.Id}"))">@item.Title</li>
+                        }
+                    }
+                </ol>
+            </div>
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    private string creatorId;
+    
+    private IEnumerable<Page> allPages;
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        msg = "";
+        try
+        {
+            allPages = await pageService.GetAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+}
