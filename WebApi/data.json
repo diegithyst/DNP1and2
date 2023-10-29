@@ -23,6 +23,12 @@
       "Username": "Iam",
       "Password": "Beingcreative",
       "Email": "a@new.user"
+    },
+    {
+      "Id": 5,
+      "Username": "NewUser",
+      "Password": "onetwothree",
+      "Email": "new@user.dk"
     }
   ],
   "Pages": [
@@ -190,6 +196,28 @@
       },
       "Title": "final test",
       "Body": "is it working"
+    },
+    {
+      "Id": 16,
+      "Creator": {
+        "Id": 1,
+        "Username": "ame",
+        "Password": "itsme",
+        "Email": "itsme@ame.me"
+      },
+      "Title": "Final final test",
+      "Body": "authorization changes"
+    },
+    {
+      "Id": 17,
+      "Creator": {
+        "Id": 2,
+        "Username": "string",
+        "Password": "string",
+        "Email": "string"
+      },
+      "Title": "I can create one too",
+      "Body": "yasss"
     }
   ]
 }

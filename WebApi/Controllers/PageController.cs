@@ -18,6 +18,7 @@ public class PageController : ControllerBase
     }
 
     [HttpPost]
+    [HttpGet("authorized")]
     public async Task<ActionResult<Page>> CreateAsync(PageCreationDto dto)
     {
         try
@@ -48,6 +49,7 @@ public class PageController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [HttpGet("authorized")]
     public async Task<ActionResult<BasicIdPage>> GetIdAsync([FromRoute] int id)
     {
         try
