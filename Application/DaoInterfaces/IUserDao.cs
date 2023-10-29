@@ -8,5 +8,6 @@ public interface IUserDao
     Task<User?> GetByUsernameAsync(string username);
     Task<User?> GetByEmailAsync(string email);
 
+    Task<IEnumerable<User>> GetAsync();
     Task<User?> GetByIdAsync(int id);
 }

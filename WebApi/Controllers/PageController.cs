@@ -1,6 +1,7 @@
 using Application.LogicInterfaces;
 using Domain.Dtos;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;

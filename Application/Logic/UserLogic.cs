@@ -39,6 +39,12 @@ public class UserLogic : IUserLogic
         return created;
     }
 
+    public async Task<IEnumerable<User>> GetAsync()
+    {
+        IEnumerable<User> users = await userDao.GetAsync();
+        return users;
+    }
+
     public Task<User?> GetByUsernameAsync(string username)
     {
         throw new NotImplementedException();
