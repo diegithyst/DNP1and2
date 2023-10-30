@@ -34,8 +34,10 @@ public class AuthService : IAuthService
         return existingUser;
     }
 
-    public Task RegisterUser(UserCreationDto user)
+    public async Task RegisterUser(UserCreationDto user)
     {
+        IEnumerable<User> users = await userLogic.GetAsync();
+        
         if (string.IsNullOrEmpty(user.Username))
         {
             throw new Exception("Username cannot be null");
@@ -50,8 +52,21 @@ public class AuthService : IAuthService
         {
             throw new Exception("Email cannot be empty");
         }
-        
-        userLogic.CreateAsync(user);
-        return Task.CompletedTask;
+
+        foreach (var existingUser in users)
+        {
+
+            if (user.Username.Equals(existingUser.Username))
+            {
+                throw new Exception("User with this username already exists!");
+            }
+
+            if (user.Email.Equals(existingUser.Email))
+            {
+                throw new Exception("User with this email already exists!");
+            }
+        }
+
+        await userLogic.CreateAsync(user);
     }
 }

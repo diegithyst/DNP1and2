@@ -29,6 +29,24 @@
       "Username": "NewUser",
       "Password": "onetwothree",
       "Email": "new@user.dk"
+    },
+    {
+      "Id": 6,
+      "Username": "New New New",
+      "Password": "string",
+      "Email": "workffs"
+    },
+    {
+      "Id": 7,
+      "Username": "Tay Tay",
+      "Password": "tayisthebest",
+      "Email": "tay@business.usa"
+    },
+    {
+      "Id": 8,
+      "Username": "stringsssss",
+      "Password": "string",
+      "Email": "stringssssss"
     }
   ],
   "Pages": [
@@ -218,6 +236,28 @@
       },
       "Title": "I can create one too",
       "Body": "yasss"
+    },
+    {
+      "Id": 18,
+      "Creator": {
+        "Id": 6,
+        "Username": "New New New",
+        "Password": "string",
+        "Email": "workffs"
+      },
+      "Title": "Hey",
+      "Body": "No"
+    },
+    {
+      "Id": 19,
+      "Creator": {
+        "Id": 7,
+        "Username": "Tay Tay",
+        "Password": "tayisthebest",
+        "Email": "tay@business.usa"
+      },
+      "Title": "tay is the best",
+      "Body": "ys"
     }
   ]
 }
