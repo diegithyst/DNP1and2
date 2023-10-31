@@ -18,7 +18,6 @@ public class PageController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
     public async Task<ActionResult<Page>> CreateAsync(PageCreationDto dto)
     {
         try
