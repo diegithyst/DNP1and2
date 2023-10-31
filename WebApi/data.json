@@ -47,6 +47,18 @@
       "Username": "stringsssss",
       "Password": "string",
       "Email": "stringssssss"
+    },
+    {
+      "Id": 9,
+      "Username": "Filip",
+      "Password": "string",
+      "Email": "filip@via.me"
+    },
+    {
+      "Id": 10,
+      "Username": "test98",
+      "Password": "test98",
+      "Email": "test98"
     }
   ],
   "Pages": [
