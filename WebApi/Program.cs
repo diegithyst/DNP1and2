@@ -3,8 +3,9 @@ using Application.DaoInterfaces;
 using Application.Logic;
 using Application.LogicInterfaces;
 using Domain.Auth;
-using FileData;
-using FileData.DAOs;
+using EfcDataAccess.DAOs;
+using EfcDataAccess;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Services;
@@ -18,10 +19,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<FileContext>();
-builder.Services.AddScoped<IUserDao, UserFileDao>();
+builder.Services.AddScoped<DataContext>();
+builder.Services.AddScoped<IUserDao, UserEfcDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IPageDao, PageFileDao>();
+builder.Services.AddScoped<IPageDao, PageEfcDao>();
 builder.Services.AddScoped<IPageLogic, PageLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 

@@ -1,11 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Models;
 
 public class Page
 {
     public int Id { get; set; }
-    public User Creator { get; }
-    public string Title { get; }
-    public string Body { get; }
+    public User Creator { get; set; }
+    public int CreatorId { get; set; }
+    public string Title { get; set; }
+    public string Body { get; set; }
 
 
     public Page(User creator, string title, string body)
@@ -14,4 +17,6 @@ public class Page
         Title = title;
         Body = body;
     }
+    
+    public Page(){}
 }

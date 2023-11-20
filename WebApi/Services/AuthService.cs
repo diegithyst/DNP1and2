@@ -2,7 +2,6 @@ using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Domain.Dtos;
 using Domain.Models;
-using FileData;
 
 namespace WebApi.Services;
 
